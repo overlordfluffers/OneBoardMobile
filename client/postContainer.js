@@ -18,6 +18,8 @@ export default class PostContainer extends Component {
 
   async componentDidMount() {
     this.fetchData()
+    let listener = newEventSource('@mobileversion')
+    listener.addEventListener('message', this.appendPostFromListener)
   }
 
   fetchData = async () => {
@@ -32,6 +34,18 @@ export default class PostContainer extends Component {
     this.fetchData().then(() => {
       this.setState({refreshing: false});
     });
+  }
+
+  appendPostFromListener = (post) => {
+    let { data } = post
+    if (!data) { console.error(post, 'no data found'); return }
+
+    let postData = JSON.parse(JSON.parse(data))
+    let { posts } = this.state
+    posts.unshift(postData)
+    if (postData) {
+      this.setState({ posts })
+    }
   }
 
   render() {
