@@ -24,6 +24,7 @@ export default class PostContainer extends Component {
 
     let listener = newEventSource('@mobile displayname')
     listener.addEventListener('message', this.appendPostFromListener)
+    this.scrollToBottom()
   }
 
   appendPostFromListener = (post) => {
@@ -38,15 +39,14 @@ export default class PostContainer extends Component {
     }
   }
   
-
-  // scrollToBottom = () => {
-  //   this.el.scrollTop = this.el.scrollHeight;
-  // }
-
+  scrollToBottom = () => {
+    this.listView.scrollToEnd()
+  }
 
   render() {
     return (
-      <ScrollView>
+      <ScrollView
+        ref={listView => { this.listView = listView; }}>
         {this.state.posts.map((post, idx) => {
           return <Post {...post} key={idx} />
         })}
