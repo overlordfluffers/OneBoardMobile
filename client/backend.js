@@ -24,3 +24,8 @@ export const setupPostListener = (displayname, listenerCallback) => {
 export const getInfoFromLatLong = async (lat, long) => {
     return await axios.get(`/displayname/resolve?lat=${lat}&long=${long}`)
 }
+
+export const newEventSource = (displayname) => {
+    let listener = new RNEventSource(`/api/stream?displayname=${displayname}`)
+    return listener
+}

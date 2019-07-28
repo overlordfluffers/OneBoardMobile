@@ -4,7 +4,6 @@ import {TouchableOpacity, Text, View, TextInput} from 'react-native';
 import styles from './styles'
 
 
-
 export default class NewPost extends React.Component {
   constructor(props) {
     super(props);

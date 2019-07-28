@@ -4,6 +4,8 @@ import {getAllPosts, setupPostListener} from './backend'
 import Post from './post'
 import {ScrollView} from 'react-native'
 
+import { newEventSource } from './backend'
+
 
 export default class PostContainer extends Component {
 
@@ -15,25 +17,26 @@ export default class PostContainer extends Component {
   }
 
   async componentDidMount() {
-    // console.log('=====================> Post Container')
-    // setupPostListener(this.props.displayName, this.appendPostFromListener)
     let { data } = await getAllPosts()
     if (data) {
       this.setState({ posts: data })
+    }
+
+    let listener = newEventSource('@mobile displayname')
+    listener.addEventListener('message', this.appendPostFromListener)
+  }
+
+  appendPostFromListener = (post) => {
+    console.log(post)
+    let { data } = post
+    if (!data) { console.error(post, 'no data found'); return }
+  
+    let postData = JSON.parse(JSON.parse(data))
+    if (postData) {
+      this.setState({ posts: [...this.state.posts, postData] })
       // this.scrollToBottom()
     }
   }
-
-  // appendPostFromListener = (post) => {
-  //   console.log(post)
-  //   let { data } = post
-  //   if (!data) { console.error(post, 'no data found'); return }
-  //
-  //   let postData = JSON.parse(JSON.parse(data))
-  //   if (postData) {
-  //     this.setState({ posts: [...this.state.posts, postData] })
-  //     // this.scrollToBottom()
-  //   }
   
 
   // scrollToBottom = () => {
