@@ -17,8 +17,8 @@ export default class PostContainer extends Component {
   }
 
   async componentDidMount() {
-    this.fetchData()
-    let listener = newEventSource('@mobileversion')
+    await this.fetchData()
+    let listener = newEventSource(this.props.displayname)
     listener.addEventListener('message', this.appendPostFromListener)
   }
 
