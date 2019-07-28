@@ -34,7 +34,7 @@ export default class PostContainer extends Component {
   //     this.setState({ posts: [...this.state.posts, postData] })
   //     // this.scrollToBottom()
   //   }
-  }
+  
 
   // scrollToBottom = () => {
   //   this.el.scrollTop = this.el.scrollHeight;
