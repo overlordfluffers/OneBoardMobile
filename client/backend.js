@@ -1,7 +1,7 @@
 import axios from 'axios'
 import RNEventSource from 'react-native-event-source'
 
-axios.defaults.baseURL = 'https://oneboard.iscottrichardson.com/api/'
+axios.defaults.baseURL = 'https://oneboard.iscottrichardson.com/api'
 
 export const getRandomDisplayname = async () => {
     return await axios.get('/displayname/');
@@ -23,4 +23,9 @@ export const setupPostListener = (displayname, listenerCallback) => {
 
 export const getInfoFromLatLong = async (lat, long) => {
     return await axios.get(`/displayname/resolve?lat=${lat}&long=${long}`)
+}
+
+export const newEventSource = (displayname) => {
+    let listener = new RNEventSource(`https://oneboard.iscottrichardson.com/api/stream?displayname=${displayname}`)
+    return listener
 }
