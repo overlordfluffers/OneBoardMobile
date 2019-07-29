@@ -5,6 +5,7 @@ import {getInfoFromLatLong} from './client/backend'
 import styles from './client/styles'
 import PostContainer from './client/postContainer'
 import NewPost from './client/createPost'
+import Settings from './client/settings'
 
 
 export default class Index extends Component {
@@ -15,6 +16,7 @@ export default class Index extends Component {
     city: '',
     state: '',
     displayName: 'mobileuser',
+    settings: false,
   }
 
   componentDidMount() {
@@ -45,8 +47,12 @@ export default class Index extends Component {
         <KeyboardAvoidingView behavior="padding" enabled style={styles.app}>
           <TopBar setDisplayName={this.setDisplayName}/>
           <Text>{this.state.city + ", " + this.state.state}</Text>
-          <PostContainer displayname={this.state.displayName}/>
-          <NewPost city={this.state.city} state={this.state.state} displayname={this.state.displayName}/>
+          {!this.state.settings &&
+            <View>
+              <PostContainer displayname={this.state.displayName}/>
+              <NewPost city={this.state.city} state={this.state.state} displayname={this.state.displayName}/>
+            </View>}
+          {this.state.settings && <Settings/>}
         </KeyboardAvoidingView>
       </SafeAreaView>
     );
